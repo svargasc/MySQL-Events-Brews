@@ -19,3 +19,10 @@ CREATE TABLE events (
   done BOOLEAN NOT NULL DEFAULT 0,
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+CREATE TABLE event_images (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  event_id INT,
+  image_url VARCHAR(255),
+  FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
+);

@@ -7,6 +7,7 @@ export const pool = createPool(
     user: "root",
     password: "Apto1404",
     database: "eventsBrews",
+    multipleStatements: true,
   },
-  console.log("Connected to database")
+  console.log("Database is connected")
 );
