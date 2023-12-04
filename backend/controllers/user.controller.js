@@ -50,9 +50,13 @@ export const login = async (req, res) => {
     const passwordMatch = await bcrypt.compare(password.toString(), data[0].password);
 
     if (passwordMatch) {
-      const { id, username } = data[0]; // Include 'id' in the user object
+      const user = {
+        id: data[0].id,
+        username: data[0].username,
+      };
+
       // Crear token
-      const token = jwt.sign({ id, username }, process.env.JWT_SECRET || "secret-key", {
+      const token = jwt.sign(user, process.env.JWT_SECRET || "secret-key", {
         expiresIn: "1d",
       });
 

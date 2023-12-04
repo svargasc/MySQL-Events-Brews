@@ -19,7 +19,9 @@ const uploadMiddleware = upload.single("eventImage");
 
 export const getEvents = async (req, res) => {
   try {
-    const [result] = await pool.query("SELECT * FROM events ORDER BY date ASC");
+    const userId = req.user.id; // Obtenemos el user_id del usuario autenticado
+
+    const [result] = await pool.query("SELECT * FROM events WHERE user_id = ? ORDER BY date ASC", [userId]);
     res.json(result);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -43,10 +45,13 @@ export const getEvent = async (req, res) => {
 export const createEvent = async (req, res) => {
   try {
     const { title, description, address, date } = req.body;
+    const userId = req.user.id; // Obtenemos el user_id del usuario autenticado
+
     const [result] = await pool.query(
-      "INSERT INTO events(title, description, address, date) VALUES (?, ?, ?, ?)",
-      [title, description, address, date]
+      "INSERT INTO events(title, description, address, date, user_id) VALUES (?, ?, ?, ?, ?)",
+      [title, description, address, date, userId]
     );
+
     res.json({ id: result.insertId, title, description, address, date });
   } catch (error) {
     return res.status(500).json({ message: error.message });

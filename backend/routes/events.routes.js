@@ -1,7 +1,9 @@
+// events.routes.js
+
 import { Router } from "express";
 import { getEvents, getEvent, createEvent, updateEvent, deleteEvent } from "../controllers/events.controller.js";
 import { auth } from "../jwt/auth.js";
-import { updateEventImage } from "../controllers/events.controller.js"; 
+import { updateEventImage } from "../controllers/events.controller.js";
 
 const router = Router();
 
